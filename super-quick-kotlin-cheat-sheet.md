@@ -55,14 +55,14 @@ class Account(){
 This is the wrong way ... 
 ```kotlin
     @Test fun shouldBuildSomethingFromNothing(){
-        assertThat(...)
+        thingUnderTest shouldBe 34
     }
 ```
 
 ... notice the use of backticks for a much more descriptive test name ...
 ```kotlin
     @Test fun `should build something from nothing`(){
-        asertThat(...)
+        thingUnderTest shouldBe 34
     }
 ```
 
