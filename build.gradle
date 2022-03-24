@@ -2,7 +2,7 @@ defaultTasks 'clean', 'build'
 
 buildscript {
     ext {
-        kotlinVersion = '1.6.0'
+        kotlinVersion = '1.6.10'
     }
     repositories {
         clear()
