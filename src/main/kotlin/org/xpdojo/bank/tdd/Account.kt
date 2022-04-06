@@ -20,9 +20,7 @@ class Account(private val openingBalance: Money = anAmountOf(0.0)) {
         fun accountWithOpeningBalanceOf(balance: Money): Account = Account(balance)
     }
 
-    fun balance(): Money {
-        return transactions.fold(anAmountOf(0.0)) { sum, element -> sum plus element.balanceEffect() }
-    }
+    fun balance() = transactions.fold(anAmountOf(0.0)) { sum, element -> sum plus element.balanceEffect() }
 
     infix fun deposit(anAmount: Money) {
         transactions = transactions + aDepositOf(anAmount)
@@ -33,15 +31,11 @@ class Account(private val openingBalance: Money = anAmountOf(0.0)) {
         transactions = transactions + aWithDrawlOf(anAmount)
     }
 
-    fun transfer(amount: Money): TransferObject {
-        return TransferObject(amount)
-    }
+    fun transfer(amount: Money) = TransferObject(amount)
 
-    fun printBalanceSlipTo(stream: PrintStream, dateTime: LocalDateTime) =
-        AccountPrinter(stream).printBalanceSlipFor(this, dateTime)
+    fun printBalanceSlipTo(stream: PrintStream, dateTime: LocalDateTime) = AccountPrinter(stream).printBalanceSlipFor(this, dateTime)
 
-    fun printStatementTo(stream: PrintStream, dateTime: LocalDateTime) =
-        AccountPrinter(stream).printStatementFor(this, dateTime)
+    fun printStatementTo(stream: PrintStream, dateTime: LocalDateTime) = AccountPrinter(stream).printStatementFor(this, dateTime)
 
     inner class TransferObject(private val amountToTransfer: Money) {
         fun into(receiver: Account) {
@@ -57,11 +51,10 @@ class Account(private val openingBalance: Money = anAmountOf(0.0)) {
             fun aWithDrawlOf(amount: Money) = Transaction(amount, WITHDRAWAL, now())
         }
 
-        fun balanceEffect(): Money {
-            return when (direction) {
-                DEPOSIT -> amount
-                WITHDRAWAL -> amount times -1
-            }
+        fun balanceEffect() = when (direction) {
+            DEPOSIT -> amount
+            WITHDRAWAL -> amount times -1
         }
+
     }
 }

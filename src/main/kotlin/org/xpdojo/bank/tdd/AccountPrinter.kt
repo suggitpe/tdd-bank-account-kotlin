@@ -6,9 +6,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class AccountPrinter(private val stream: PrintStream) {
-
     private val dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
-
 
     fun printBalanceSlipFor(account: Account, dateTime: LocalDateTime) {
         stream.println(
@@ -53,6 +51,4 @@ class AccountPrinter(private val stream: PrintStream) {
             *************************************************** """
         )
     }
-
-
 }
