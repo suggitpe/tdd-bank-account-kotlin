@@ -1,8 +1,11 @@
 package org.xpdojo.bank.tdd
 
-import org.junit.jupiter.api.Disabled
+import io.kotest.assertions.throwables.shouldThrowAny
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.xpdojo.bank.tdd.Account.Companion.accountWithOpeningBalanceOf
+import org.xpdojo.bank.tdd.Money.Companion.anAmountOf
 
 /**
  * Requirements:
@@ -14,10 +17,65 @@ import org.junit.jupiter.api.Test
  *  I can apply Statement filters (include just deposits, withdrawal, date)
  */
 @DisplayName("With an account we can ...")
-class AccountTest {
+internal class AccountTest {
 
-    @Disabled
-    @Test fun `deposit an amount to increase the balance`() {
-        TODO("Implement a failing test, make it pass, refactor ...")
+    @Test
+    fun `deposit an amount to increase the balance`() {
+        val account = accountWithOpeningBalanceOf(anAmountOf(10.0))
+        account deposit anAmountOf(15.0)
+        account.balance() shouldBe anAmountOf(25.0)
     }
+
+    @Test
+    fun `withdraw an amount to reduce the balance`() {
+        val account = accountWithOpeningBalanceOf(anAmountOf(55.0))
+        account withdraw anAmountOf(20.0)
+        account.balance() shouldBe anAmountOf(35.0)
+    }
+
+    @Test
+    fun `attempting to withdraw without funds causes exception`() {
+        val account = accountWithOpeningBalanceOf(anAmountOf(10.0))
+        shouldThrowAny {
+            account withdraw anAmountOf(25.0)
+        }
+    }
+
+    @Test
+    fun `transfer between accounts`() {
+        val sender = accountWithOpeningBalanceOf(anAmountOf(50.0))
+        val receiver = accountWithOpeningBalanceOf(anAmountOf(10.0))
+        sender.transfer(anAmountOf(30.0)).into(receiver)
+        sender.balance() shouldBe anAmountOf(20.0)
+        receiver.balance() shouldBe anAmountOf(40.0)
+    }
+
+    @Test
+    fun `attempting to transfer without funds causes exception`() {
+        val sender = accountWithOpeningBalanceOf(anAmountOf(50.0))
+        val receiver = accountWithOpeningBalanceOf(anAmountOf(10.0))
+        shouldThrowAny {
+            sender.transfer(anAmountOf(130.0)).into(receiver)
+        }
+    }
+
+    @Test
+    fun `process a number of transactions on an account`() {
+        val account = accountWithOpeningBalanceOf(anAmountOf(100.0))
+
+        account.deposit(anAmountOf(220.0))
+        account.deposit(anAmountOf(50.0))
+        account.deposit(anAmountOf(75.0))
+        account.withdraw(anAmountOf(225.0))
+        account.withdraw(anAmountOf(25.0))
+        account.deposit(anAmountOf(5.0))
+
+        account.balance() shouldBe anAmountOf(200.0)
+
+        shouldThrowAny {
+            account.withdraw(anAmountOf(220.0))
+        }
+    }
+
+
 }
