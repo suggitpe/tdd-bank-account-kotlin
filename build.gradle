@@ -42,7 +42,8 @@ dependencies {
             libs.slf4j
 
     testImplementation libs.test.junitApi,
-            libs.test.kotestAssertions
+            libs.test.kotestAssertions,
+            libs.test.mockito
 
     testRuntimeOnly libs.test.junitEngine,
             libs.logback
