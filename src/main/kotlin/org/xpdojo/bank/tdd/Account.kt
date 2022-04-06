@@ -48,6 +48,5 @@ class Account(private val openingBalance: Money = anAmountOf(0.0)) {
             fun aDepositOf(amount: Money) = Transaction(amount, DEPOSIT)
             fun aWithDrawlOf(amount: Money) = Transaction(amount, WITHDRAWAL)
         }
-
     }
 }
