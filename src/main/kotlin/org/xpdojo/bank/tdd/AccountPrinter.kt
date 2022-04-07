@@ -23,6 +23,9 @@ class AccountPrinter(private val stream: PrintStream) {
         )
     }
 
+    fun printStatementFor(account: Account, dateTime: LocalDateTime) =
+        printStatementFor(account, dateTime) { true }
+
     fun printStatementFor(account: Account, dateTime: LocalDateTime, filter: (Transaction) -> Boolean) {
 
         fun printStatementLineFor(transaction: Transaction) {

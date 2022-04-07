@@ -95,9 +95,9 @@ internal class AccountTest {
     @Test
     fun `print a balance slip`() {
         val account = accountWithOpeningBalanceOf(anAmountOf(100.0))
-        account.printBalanceSlipTo(mockStream, now())
+        AccountPrinter(mockStream).printBalanceSlipFor(account, now())
         verify(mockStream, times(1)).println(anyString())
-        account.printBalanceSlipTo(PrintStream(System.out), now())
+        AccountPrinter(PrintStream(System.out)).printBalanceSlipFor(account, now())
     }
 
     @Test
@@ -106,9 +106,9 @@ internal class AccountTest {
         account.deposit(anAmountOf(200.0))
         account.deposit(anAmountOf(300.00))
         account.withdraw(anAmountOf(290.0))
-        account.printStatementTo(mockStream, now())
+        AccountPrinter(mockStream).printStatementFor(account, now())
         verify(mockStream, times(6)).println(anyString())
-        account.printStatementTo(PrintStream(System.out), now())
+        AccountPrinter(PrintStream(System.out)).printStatementFor(account, now())
     }
 
     @Test
@@ -117,8 +117,8 @@ internal class AccountTest {
         account.deposit(anAmountOf(150.0))
         account.withdraw(anAmountOf(30.0))
         account.withdraw(anAmountOf(35.0))
-        account.printStatementTo(mockStream, now()) { it.direction == DEPOSIT }
+        AccountPrinter(mockStream).printStatementFor(account, now()) { it.direction == DEPOSIT }
         verify(mockStream, times(4)).println(anyString())
-        account.printStatementTo(PrintStream(System.out), now()) { it.direction == DEPOSIT }
+        AccountPrinter(PrintStream(System.out)).printStatementFor(account, now()) { it.direction == DEPOSIT }
     }
 }

@@ -5,7 +5,6 @@ import org.xpdojo.bank.tdd.Account.Transaction.Companion.aWithDrawlOf
 import org.xpdojo.bank.tdd.Account.Transaction.DIRECTION.DEPOSIT
 import org.xpdojo.bank.tdd.Account.Transaction.DIRECTION.WITHDRAWAL
 import org.xpdojo.bank.tdd.Money.Companion.anAmountOf
-import java.io.PrintStream
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 
@@ -32,11 +31,6 @@ class Account(private val openingBalance: Money = anAmountOf(0.0)) {
     }
 
     fun transfer(amount: Money) = TransferObject(amount)
-
-    fun printBalanceSlipTo(stream: PrintStream, dateTime: LocalDateTime) = AccountPrinter(stream).printBalanceSlipFor(this, dateTime)
-
-    fun printStatementTo(stream: PrintStream, dateTime: LocalDateTime, filter: (Transaction) -> Boolean) = AccountPrinter(stream).printStatementFor(this, dateTime, filter)
-    fun printStatementTo(stream: PrintStream, dateTime: LocalDateTime) = AccountPrinter(stream).printStatementFor(this, dateTime) { true }
 
     inner class TransferObject(private val amountToTransfer: Money) {
         fun into(receiver: Account) {
