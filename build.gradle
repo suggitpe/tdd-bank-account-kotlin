@@ -1,20 +1,11 @@
-defaultTasks 'clean', 'build'
-
-buildscript {
-    ext {
-        kotlinVersion = '1.6.20'
-    }
-    repositories {
-        clear()
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
-    }
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.20'
 }
 
 apply from: "$rootDir/dependencies.gradle"
 apply plugin: 'kotlin'
+
+defaultTasks 'clean', 'build'
 
 group = "org.xpdojo.bank.tdd"
 
