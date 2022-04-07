@@ -1,6 +1,6 @@
 ext {
 
-    kotlinVersion = '1.6.10'
+    kotlinVersion = '1.6.20'
 
     libs = [
 
