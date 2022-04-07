@@ -11,6 +11,7 @@ buildscript {
 }
 
 defaultTasks 'clean', 'build'
+
 apply from: "$rootDir/dependencies.gradle"
 apply plugin: 'kotlin'
 
