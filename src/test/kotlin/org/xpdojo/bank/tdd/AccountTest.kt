@@ -9,6 +9,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations.openMocks
 import org.xpdojo.bank.tdd.Account.Companion.accountWithOpeningBalanceOf
+import org.xpdojo.bank.tdd.Account.Transaction.DIRECTION.DEPOSIT
 import org.xpdojo.bank.tdd.Money.Companion.anAmountOf
 import java.io.PrintStream
 import java.time.LocalDateTime.now
@@ -106,9 +107,18 @@ internal class AccountTest {
         account.deposit(anAmountOf(300.00))
         account.withdraw(anAmountOf(290.0))
         account.printStatementTo(mockStream, now())
-        verify(mockStream, atLeast(3)).println(anyString())
+        verify(mockStream, times(6)).println(anyString())
         account.printStatementTo(PrintStream(System.out), now())
     }
 
-
+    @Test
+    fun `print a filtered statement of deposits only`() {
+        val account = accountWithOpeningBalanceOf(anAmountOf(100.0))
+        account.deposit(anAmountOf(150.0))
+        account.withdraw(anAmountOf(30.0))
+        account.withdraw(anAmountOf(35.0))
+        account.printStatementTo(mockStream, now()) { it.direction == DEPOSIT }
+        verify(mockStream, times(4)).println(anyString())
+        account.printStatementTo(PrintStream(System.out), now()) { it.direction == DEPOSIT }
+    }
 }

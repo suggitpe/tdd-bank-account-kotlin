@@ -23,7 +23,7 @@ class AccountPrinter(private val stream: PrintStream) {
         )
     }
 
-    fun printStatementFor(account: Account, dateTime: LocalDateTime) {
+    fun printStatementFor(account: Account, dateTime: LocalDateTime, filter: (Transaction) -> Boolean) {
 
         fun printStatementLineFor(transaction: Transaction) {
             stream.println("                  ${transaction.dateTime.format(dateFormat)} ${transaction.direction} ${transaction.balanceEffect().amount.toString().padStart(6)}")
@@ -42,7 +42,7 @@ class AccountPrinter(private val stream: PrintStream) {
                Transaction History:"""
         )
 
-        account.transactions.forEach { printStatementLineFor(it) }
+        account.transactions.filter(filter).forEach { printStatementLineFor(it) }
 
         stream.println(
             """
