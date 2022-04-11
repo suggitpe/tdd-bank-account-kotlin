@@ -1,9 +1,7 @@
 ext {
-
     kotlinVersion = '1.6.20'
 
     libs = [
-
             kotlin : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
 
             slf4j  : 'org.slf4j:slf4j-api:1.7.36',
