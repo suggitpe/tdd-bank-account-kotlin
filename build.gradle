@@ -31,8 +31,8 @@ test {
 }
 
 ext {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 1.14
+    targetCompatibility = 1.14
 }
 
 dependencies {
